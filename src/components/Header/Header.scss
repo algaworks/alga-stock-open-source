@@ -1,0 +1,40 @@
+header.AppHeader {
+  background-color: #09f;
+  color: #fff;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  box-shadow: 0 3px 6px rgba(0,0,0,.2);
+
+  h1 {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+  }
+
+  nav.navigation {
+    ul {
+      display: flex;
+      list-style: none;
+
+      li {
+        &:not(:last-child) {
+          margin-right: 10px;
+        }
+
+        a {
+          color: #fff;
+          text-decoration: none;
+          padding: 5px 10px;
+          display: inline-block;
+
+          &:hover {
+            background-color: rgba(#000, .1)
+          }
+        }
+      }
+    }
+  }
+}

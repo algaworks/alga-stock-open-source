@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
+import Header from '../components/Header'
 import Swal from 'sweetalert2'
-import './App.css';
-import Header from '../Header';
-import Container from '../../shared/Container';
-import Table, { TableHeader } from '../../shared/Table';
-import Products, { Product } from '../../shared/Table/Table.mockdata';
-import ProductForm, { ProductCreator } from '../Products/ProductForm';
+import Products, { Product } from '../shared/Table/Table.mockdata'
+import Container from '../shared/Container'
+import Table from '../shared/Table'
+import { TableHeader } from '../shared/Table'
+import ProductForm, { ProductCreator } from '../components/Products/ProductForm'
 
 const headers: TableHeader[] = [
   { key: 'id', value: '#' },
@@ -14,7 +14,7 @@ const headers: TableHeader[] = [
   { key: 'stock', value: 'Available Stock', right: true }
 ]
 
-function App() {
+const ProductsView: React.FC = () => {
   const [products, setProducts] = useState(Products)
   const [updatingProduct, setUpdatingProduct] = useState<Product | undefined>(undefined)
   
@@ -97,7 +97,7 @@ function App() {
         />
       </Container>
     </div>
-  );
+  )
 }
 
-export default App;
+export default ProductsView
