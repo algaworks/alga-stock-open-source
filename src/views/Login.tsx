@@ -52,8 +52,6 @@ const LoginView: React.FC = () => {
             </Button>
           </Grid>
         </Grid>
-        
-        
       </Form>
     </Container>
   </div>
