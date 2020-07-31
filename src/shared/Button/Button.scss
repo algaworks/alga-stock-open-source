@@ -1,0 +1,21 @@
+button.AppButton {
+  background-color: #09f;
+  color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 3px 6px rgba(#000, .1);
+  border: none;
+  padding: 7px 10px;
+  transition: .25s ease;
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 6px rgba(#000, .2);
+  }
+
+  &.rounded {
+    width: 32px;
+    height: 32px;
+    border-radius: 22px;
+  }
+}

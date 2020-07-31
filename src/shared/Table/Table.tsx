@@ -1,7 +1,17 @@
 import React from 'react'
+import { Edit, Visibility, Delete } from '@material-ui/icons'
+import {
+  Table as MTable,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  IconButton
+} from '@material-ui/core'
 import './Table.scss'
 import organizeData from '../../utils/organizeDataForTable'
-import Button from '../Button'
 
 export interface TableHeader {
   key: string
@@ -22,80 +32,90 @@ declare interface TableProps {
 const Table: React.FC<TableProps> = (props) => {
   const [organizedData, indexedHeaders] = organizeData(props.data, props.headers)
 
-  return <table className="AppTable">
-    <thead>
-      <tr>
-        {
-          props.headers.map(header =>
-            <th
-              className={header.right ? 'right' : ''}
-              key={header.key}
-            >
-              {header.value}
-            </th>
-          )
-        }
-        {
-          props.enableActions
-            && <th className="right">
-              Actions
-            </th>
-        }
-      </tr>
-    </thead>
-    <tbody>
-      {
-        organizedData.map((row, i) => {
-          return <tr key={i}>
+  return <TableContainer component={Paper}>
+      <MTable>
+        <TableHead>
+          <TableRow>
             {
-              Object
-                .keys(row)
-                .map((item, i) =>
-                  item !== '$original'
-                    ? <td
-                        key={row.$original.id + i}
-                        className={indexedHeaders[item].right ? 'right' : ''}
-                      >
-                        { row[item] }
-                      </td>
-                    : null
-                )
+              props.headers.map(header =>
+                <TableCell
+                  align={header.right ? 'right' : 'left'}
+                  key={header.key}
+                >
+                  {header.value}
+                </TableCell>
+              )
             }
-
             {
               props.enableActions
-                && <td className="actions right">
-                  {
-                    props.onEdit &&
-                      <Button
-                        onClick={() => props.onEdit && props.onEdit(row)}
-                      >
-                        Edit
-                      </Button>
-                  }
-                  {
-                    props.onDetail &&
-                      <Button
-                        onClick={() => props.onDetail && props.onDetail(row)}
-                      >
-                        Detail
-                      </Button>
-                  }
-                  {
-                    props.onDelete &&
-                      <Button
-                        onClick={() => props.onDelete && props.onDelete(row)}
-                      >
-                        Delete
-                      </Button>
-                  }
-                </td>
+                && <TableCell align="right">
+                  Actions
+                </TableCell>
             }
-          </tr>
-        })
-      }
-    </tbody>
-  </table>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {
+            organizedData.map((row, i) => {
+              return <TableRow key={i}>
+                {
+                  Object
+                    .keys(row)
+                    .map((item, i) =>
+                      item !== '$original'
+                        ? <TableCell
+                            key={row.$original.id + i}
+                            align={indexedHeaders[item].right ? 'right' : 'left'}
+                          >
+                            { row[item] }
+                          </TableCell>
+                        : null
+                    )
+                }
+
+                {
+                  props.enableActions
+                    && <TableCell align="right">
+                      {
+                        props.onEdit &&
+                        <IconButton
+                          onClick={() => props.onEdit && props.onEdit(row)}
+                          color="primary"
+                          size="small"
+                          
+                        >
+                          <Edit fontSize="inherit" />
+                        </IconButton>
+                      }
+                      {
+                        props.onDetail &&
+                          <IconButton
+                            onClick={() => props.onDetail && props.onDetail(row)}
+                            size="small"
+                            color="primary"
+                          >
+                            <Visibility fontSize="inherit" />
+                          </IconButton>
+                      }
+                      {
+                        props.onDelete &&
+                          <IconButton
+                            onClick={() => props.onDelete && props.onDelete(row)}
+                            color="primary"
+                            size="small"
+                          >
+                            <Delete fontSize="inherit" />
+                          </IconButton>
+                      }
+                    </TableCell>
+                }
+              </TableRow>
+            })
+          }
+        </TableBody>
+      </MTable>
+  </TableContainer>
+  
 }
 
 export default Table

@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react'
 
 import Form from '../../shared/Form'
 import Input from '../../shared/Input'
-import Button from '../../shared/Button'
 import { Product } from '../../shared/Table/Table.mockdata'
+import { Grid, Button } from '@material-ui/core'
 
 declare interface InitialFormState {
   id?: number
@@ -85,40 +85,61 @@ const ProductForm: React.FC<ProductFormProps> = (props) => {
   }
 
   return <Form title="Product form" onSubmit={handleFormSubmit}>
-    <Input
-      onChange={handleInputChange}
-      value={form.name}
-      name="name"
-      label="Name"
-      placeholder="E.g.: Cookie"
-      required
-    />
-    <Input
-      onChange={handleInputChange}
-      value={form.price}
-      name="price"
-      label="Price"
-      type="number"
-      step="0.01"
-      min="0"
-      placeholder="E.g.: 1.25"
-      required
-    />
-    <Input
-      onChange={handleInputChange}
-      value={form.stock}
-      name="stock"
-      label="Stock"
-      type="number"
-      min="0"
-      placeholder="E.g.: 15"
-      required
-    />
-    <Button>
-      {
-        form.id ? 'Update' : 'Submit'
-      }
-    </Button>
+    <Grid container spacing={3}>
+      <Grid item xs={12}>
+        <Input
+          fullWidth
+          InputLabelProps={{
+            shrink: true,
+          }}
+          onChange={handleInputChange}
+          value={form.name}
+          name="name"
+          label="Name"
+          placeholder="E.g.: Cookie"
+          required
+        />
+      </Grid>
+      <Grid item xs={12}>
+        <Input
+          fullWidth
+          InputLabelProps={{
+            shrink: true,
+          }}
+          onChange={handleInputChange}
+          value={form.price}
+          name="price"
+          label="Price"
+          type="number"
+          placeholder="E.g.: 1.25"
+          required
+        />
+      </Grid>
+      <Grid item xs={12}>
+        <Input
+          fullWidth
+          InputLabelProps={{
+            shrink: true,
+          }}
+          onChange={handleInputChange}
+          value={form.stock}
+          name="stock"
+          label="Stock"
+          type="number"
+          placeholder="E.g.: 15"
+          required
+        />
+      </Grid>
+      <Grid item xs={12} justify="flex-end">
+        <Button type="submit" color="primary" variant="contained" >
+          {
+            form.id ? 'Update' : 'Submit'
+          }
+        </Button>
+      </Grid>
+    </Grid>
+    
+    
   </Form>
 }
 

@@ -1,19 +1,10 @@
 import React from 'react'
-import './Input.css'
+import { TextField, TextFieldProps } from '@material-ui/core'
 
-declare interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  label: string
-}
-
-const Input: React.FC<InputProps> = (props) => {
-  return <div className="AppInput">
-    <label>
-      <span>{ props.label }</span>
-      <input
-        {...props}
-      />
-    </label>
-  </div>
+const Input: React.FC<TextFieldProps> = (props) => {
+  return <TextField
+    {...props}
+  />
 }
 
 export default Input
