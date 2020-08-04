@@ -64,7 +64,7 @@ const Table: React.FC<TableProps> = (props) => {
                     .map((item, i) =>
                       item !== '$original'
                         ? <TableCell
-                            key={row.$original.id + i}
+                            key={row.$original._id + i}
                             align={indexedHeaders[item].right ? 'right' : 'left'}
                           >
                             { row[item] }

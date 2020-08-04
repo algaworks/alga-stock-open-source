@@ -19,7 +19,7 @@ export const createProduct = (product: ProductCreator) =>
 
 export const updateProduct = (newProduct: Product) =>
   http
-    .patch(`/products/${newProduct.id}`, newProduct)
+    .patch(`/products/${newProduct._id}`, newProduct)
     .then(res => res.data)
 
 export const deleteProduct = (productId: number) =>

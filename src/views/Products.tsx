@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Header from '../components/Header'
 import Swal from 'sweetalert2'
-import Products, { Product } from '../shared/Table/Table.mockdata'
+import { Product } from '../shared/Table/Table.mockdata'
 import Container from '../shared/Container'
 import Table from '../shared/Table'
 import { TableHeader } from '../shared/Table'
@@ -15,14 +15,14 @@ const headers: TableHeader[] = [
 ]
 
 const ProductsView: React.FC = () => {
-  const [products, setProducts] = useState(Products)
+  const [products, setProducts] = useState<Product[]>([])
   const [updatingProduct, setUpdatingProduct] = useState<Product | undefined>(undefined)
-  
+
   const handleProductSubmit = (product: ProductCreator) => {
     setProducts([
       ...products,
       {
-        id: products.length + 1,
+        _id: String(products.length + 1),
         ...product
       }
     ])
@@ -30,7 +30,7 @@ const ProductsView: React.FC = () => {
 
   const handleProductUpdate = (newProduct: Product) => {
     setProducts(products.map(product =>
-      product.id === newProduct.id
+      product._id === newProduct._id
         ? newProduct
         : product
     ))
@@ -38,8 +38,8 @@ const ProductsView: React.FC = () => {
     setUpdatingProduct(undefined)
   }
 
-  const deleteProduct = (id: number) => {
-    setProducts(products.filter(product => product.id !== id))
+  const deleteProduct = (id: string) => {
+    setProducts(products.filter(product => product._id !== id))
   }
 
   const handleProductDelete = (product: Product) => {
@@ -55,7 +55,7 @@ const ProductsView: React.FC = () => {
       })
       .then((result) => {
         if (result.value) {
-          deleteProduct(product.id)
+          deleteProduct(product._id)
           Swal.fire(
             'Deleted!',
             'Your file has been deleted.',
