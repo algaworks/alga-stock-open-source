@@ -3,6 +3,8 @@ export interface Product {
   name: string
   price: number
   stock: number
+  createdAt?: string
+  updatedAt?: string
 }
 
 const Products: Product[] = [

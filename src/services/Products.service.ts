@@ -17,12 +17,17 @@ export const createProduct = (product: ProductCreator) =>
     .post('/products', product)
     .then(res => res.data)
 
-export const updateProduct = (newProduct: Product) =>
+export const updateProduct = ({ _id, name, price, stock }: Product) =>
   http
-    .patch(`/products/${newProduct._id}`, newProduct)
+    .patch(`/products/${_id}`, {
+      ...(_id   && { _id }),
+      ...(name  && { name }),
+      ...(stock && { stock }),
+      ...(price && { price })
+    })
     .then(res => res.data)
 
-export const deleteProduct = (productId: number) =>
+export const deleteProduct = (productId: string) =>
   http
     .delete(`/products/${productId}`)
     .then(res => res.data)

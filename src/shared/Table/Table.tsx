@@ -79,7 +79,7 @@ const Table: React.FC<TableProps> = (props) => {
                       {
                         props.onEdit &&
                         <IconButton
-                          onClick={() => props.onEdit && props.onEdit(row)}
+                          onClick={() => props.onEdit && props.onEdit(row.$original)}
                           color="primary"
                           size="small"
                           
@@ -90,7 +90,7 @@ const Table: React.FC<TableProps> = (props) => {
                       {
                         props.onDetail &&
                           <IconButton
-                            onClick={() => props.onDetail && props.onDetail(row)}
+                            onClick={() => props.onDetail && props.onDetail(row.$original)}
                             size="small"
                             color="primary"
                           >
@@ -100,7 +100,7 @@ const Table: React.FC<TableProps> = (props) => {
                       {
                         props.onDelete &&
                           <IconButton
-                            onClick={() => props.onDelete && props.onDelete(row)}
+                            onClick={() => props.onDelete && props.onDelete(row.$original)}
                             color="primary"
                             size="small"
                           >

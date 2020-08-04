@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Header from '../components/Header'
 import Swal from 'sweetalert2'
 import { Product } from '../shared/Table/Table.mockdata'
@@ -6,9 +6,9 @@ import Container from '../shared/Container'
 import Table from '../shared/Table'
 import { TableHeader } from '../shared/Table'
 import ProductForm, { ProductCreator } from '../components/Products/ProductForm'
+import * as Products from '../services/Products.service'
 
 const headers: TableHeader[] = [
-  { key: 'id', value: '#' },
   { key: 'name', value: 'Product' },
   { key: 'price', value: 'Price', right: true },
   { key: 'stock', value: 'Available Stock', right: true }
@@ -18,28 +18,51 @@ const ProductsView: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([])
   const [updatingProduct, setUpdatingProduct] = useState<Product | undefined>(undefined)
 
-  const handleProductSubmit = (product: ProductCreator) => {
-    setProducts([
-      ...products,
-      {
-        _id: String(products.length + 1),
-        ...product
-      }
-    ])
+  async function fetchData() {
+    try {
+      const _products = await Products.getAllProducts()
+      setProducts(_products) 
+    } catch (err) {
+      Swal.fire('Oops!', err.response.message || err.message, 'error')
+    }
   }
 
-  const handleProductUpdate = (newProduct: Product) => {
-    setProducts(products.map(product =>
-      product._id === newProduct._id
-        ? newProduct
-        : product
-    ))
+  useEffect(() => {
+    fetchData()
+  }, [])
 
-    setUpdatingProduct(undefined)
+  const handleProductSubmit = async (product: ProductCreator) => {
+    try {
+      await Products.createProduct(product)
+      fetchData()
+      Swal.fire('Uhul!', 'Product successfully created', 'success')
+    } catch (err) {
+      Swal.fire('Oops!', err.response?.message || err.message, 'error')
+    }
   }
 
-  const deleteProduct = (id: string) => {
-    setProducts(products.filter(product => product._id !== id))
+  const handleProductUpdate = async (newProduct: Product) => {
+    try {
+      Products.updateProduct(newProduct)
+      setUpdatingProduct(undefined)
+      fetchData()
+    } catch (err) {
+      Swal.fire('Oops!', err.response?.message || err.message, 'error')
+    }
+  }
+
+  const deleteProduct = async (id: string) => {
+    try {
+      await Products.deleteProduct(id)
+      fetchData()
+      Swal.fire(
+        'Deleted!',
+        'The product has been deleted.',
+        'success'
+      )
+    } catch (err) {
+      Swal.fire('Oops!', err.response?.message || err.message, 'error')
+    }
   }
 
   const handleProductDelete = (product: Product) => {
@@ -56,11 +79,6 @@ const ProductsView: React.FC = () => {
       .then((result) => {
         if (result.value) {
           deleteProduct(product._id)
-          Swal.fire(
-            'Deleted!',
-            'Your file has been deleted.',
-            'success'
-          )
         }
       })
   }
