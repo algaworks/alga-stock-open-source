@@ -43,10 +43,11 @@ const ProductsView: React.FC = () => {
 
   const handleProductUpdate = async (newProduct: Product) => {
     try {
-      Products.updateProduct(newProduct)
       setUpdatingProduct(undefined)
+      await Products.updateProduct(newProduct)
       fetchData()
     } catch (err) {
+      setUpdatingProduct(newProduct)
       Swal.fire('Oops!', err.response?.message || err.message, 'error')
     }
   }
